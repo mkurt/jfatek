@@ -42,10 +42,10 @@ public class FatekLoopCmd extends FatekCommand<Void> {
      * @param fatekPLC connection manager to use
      * @param message test message
      */
-    FatekLoopCmd(FatekPLC fatekPLC, String message) {
+    FatekLoopCmd(FatekPLC fatekPLC, int plcId, String message) {
 
         // TODO range check
-        super(fatekPLC);
+        super(fatekPLC, plcId);
         this.message = message;
     }
 
@@ -53,9 +53,10 @@ public class FatekLoopCmd extends FatekCommand<Void> {
      * Create loop back command with random message.
      *
      * @param fatekPLC connection manager to use
+     * @param plcId plc station address
      */
-    public FatekLoopCmd(FatekPLC fatekPLC) {
-        super(fatekPLC);
+    public FatekLoopCmd(FatekPLC fatekPLC, int plcId) {
+        super(fatekPLC, plcId);
         message = String.format("%X", System.currentTimeMillis());
     }
 

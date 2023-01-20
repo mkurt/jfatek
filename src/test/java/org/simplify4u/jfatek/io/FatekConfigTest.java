@@ -81,15 +81,6 @@ public class FatekConfigTest {
         assertEquals(fatekConfig2.getPort(9999), 9999);
     }
 
-    @Test
-    public void testGetPlcId() throws Exception {
-
-        assertEquals(fatekConfig.getPlcId(), 123);
-
-        FatekConfig fatekConfig2 = new FatekConfig(new URI("test://test"));
-        assertEquals(fatekConfig2.getPlcId(), FatekConfig.DEFAULT_PLC_ID);
-    }
-
     @DataProvider(name = "name", parallel = true)
     public static Object[][] name() {
 

@@ -44,11 +44,12 @@ public class FatekReadMixDataCmd extends FatekCommand<Map<Reg, RegValue>> {
      * Create new command for mixed read the random discrete status or register data.
      *
      * @param fatekPLC connection manager to use
+     * @param plcId plc station address
      * @param regs     regs name to read
      */
-    public FatekReadMixDataCmd(FatekPLC fatekPLC, Reg... regs) {
+    public FatekReadMixDataCmd(FatekPLC fatekPLC, int plcId, Reg... regs) {
 
-        super(fatekPLC);
+        super(fatekPLC, plcId);
         this.regs = regs.clone();
     }
 
@@ -56,11 +57,12 @@ public class FatekReadMixDataCmd extends FatekCommand<Map<Reg, RegValue>> {
      * Create new command for mixed read the random discrete status or register data.
      *
      * @param fatekPLC connection manager to use
+     * @param plcId plc station address
      * @param regs     list of regs name to read
      */
-    public FatekReadMixDataCmd(FatekPLC fatekPLC, Collection<Reg> regs) {
+    public FatekReadMixDataCmd(FatekPLC fatekPLC, int plcId, Collection<Reg> regs) {
 
-        super(fatekPLC);
+        super(fatekPLC, plcId);
         this.regs = regs.toArray(new Reg[regs.size()]);
     }
 

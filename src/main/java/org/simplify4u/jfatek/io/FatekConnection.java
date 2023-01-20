@@ -69,10 +69,6 @@ public abstract class FatekConnection {
         }
     }
 
-    public int getPlcId() {
-        return fatekConfig.getPlcId();
-    }
-
     public Optional<String> getParam(String key) {
         return fatekConfig.getParam(key);
     }

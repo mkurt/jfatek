@@ -29,8 +29,8 @@ public class FatekGistSystemStatusCmd extends FatekCommand<FatekGistSystemStatus
     public static final int CMD_ID = 0x40;
     private final FatekGistSystemStatus status;
 
-    public FatekGistSystemStatusCmd(FatekPLC fatekPLC) {
-        super(fatekPLC);
+    public FatekGistSystemStatusCmd(FatekPLC fatekPLC, int plcId) {
+        super(fatekPLC, plcId);
         status = new FatekGistSystemStatus();
     }
 

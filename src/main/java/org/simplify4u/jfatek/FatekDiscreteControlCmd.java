@@ -32,9 +32,9 @@ public class FatekDiscreteControlCmd extends FatekCommand<Void> {
     private final DisRunCode runningCode;
     private final DisReg discrete;
 
-    public FatekDiscreteControlCmd(FatekPLC fatekPLC, DisReg discrete, DisRunCode runningCode) {
+    public FatekDiscreteControlCmd(FatekPLC fatekPLC, int plcId, DisReg discrete, DisRunCode runningCode) {
 
-        super(fatekPLC);
+        super(fatekPLC, plcId);
         this.discrete = discrete;
         this.runningCode = runningCode;
     }

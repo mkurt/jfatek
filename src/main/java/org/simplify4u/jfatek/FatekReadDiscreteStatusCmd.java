@@ -41,9 +41,9 @@ public class FatekReadDiscreteStatusCmd extends FatekCommand<List<Boolean>> {
 
     private List<Boolean> returnData;
 
-    public FatekReadDiscreteStatusCmd(FatekPLC fatekPLC, DisReg discrete, int number) {
+    public FatekReadDiscreteStatusCmd(FatekPLC fatekPLC, int plcId, DisReg discrete, int number) {
 
-        super(fatekPLC);
+        super(fatekPLC, plcId);
         this.discrete = discrete;
         this.number = number;
         // TODO range check

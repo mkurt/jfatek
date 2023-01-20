@@ -29,9 +29,9 @@ public class FatekControlCmd extends FatekCommand<Void> {
     public static final int CMD_ID = 0x41;
     private final Boolean run;
 
-    public FatekControlCmd(FatekPLC fatekPLC, boolean run) {
+    public FatekControlCmd(FatekPLC fatekPLC, int plcId, boolean run) {
 
-        super(fatekPLC);
+        super(fatekPLC, plcId);
         this.run = run;
     }
 

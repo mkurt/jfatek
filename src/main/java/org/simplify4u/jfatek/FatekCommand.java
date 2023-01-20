@@ -36,10 +36,17 @@ public abstract class FatekCommand<T> {
 
     private boolean alreadySent;
 
-    protected FatekCommand(FatekPLC fatekPLC) {
+    private final int plcId;
+
+    protected FatekCommand(FatekPLC fatekPLC, int plcId) {
 
         this.fatekPLC = fatekPLC;
+        this.plcId = plcId;
         this.alreadySent = false;
+    }
+
+    public int getPlcId() {
+        return plcId;
     }
 
     /**
@@ -149,7 +156,7 @@ public abstract class FatekCommand<T> {
         beforeExecute();
         do {
             FatekWriter writer = conn.getWriter();
-            writer.writeByte(conn.getPlcId());
+            writer.writeByte(plcId);
             writer.writeByte(getID());
             writeData(writer);
             // write whole message from internal buffer to stream
@@ -160,7 +167,7 @@ public abstract class FatekCommand<T> {
             reader.readNextMessage();
 
             // check plc id in response
-            if (reader.readByte() != conn.getPlcId()) {
+            if (reader.readByte() != plcId) {
                 throw new FatekException("Incorrect return PLC ID");
             }
 

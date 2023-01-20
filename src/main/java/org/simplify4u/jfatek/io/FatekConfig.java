@@ -34,10 +34,8 @@ import java.util.regex.Pattern;
  */
 public class FatekConfig {
 
-    public static final String PARAM_PLC_ID = "plcId";
     public static final String PARAM_TIMEOUT = "timeout";
 
-    public static final int DEFAULT_PLC_ID = 1;
     public static final int DEFAULT_TIMEOUT = 5000;
 
     private final URI uri;
@@ -88,10 +86,6 @@ public class FatekConfig {
      */
     public String getFullName() {
         return Optional.ofNullable(uri.getHost()).orElse("") + Optional.ofNullable(uri.getPath()).orElse("");
-    }
-
-    public int getPlcId() {
-        return getParamAsInt(PARAM_PLC_ID).orElse(DEFAULT_PLC_ID);
     }
 
     /**

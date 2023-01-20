@@ -37,9 +37,9 @@ public class FatekGistSystemStatusCmdTest {
     @Test
     public void testCmd() throws Exception {
         try (FatekPLC fatekPLC = new FatekPLC(
-                String.format("test://test?plcId=1&plcOutData=0140&plcInData=01400%02X%02X%02X", 0x29, 0xaa, 0xbb))) {
+                String.format("test://test?plcOutData=0140&plcInData=01400%02X%02X%02X", 0x29, 0xaa, 0xbb))) {
 
-            FatekGistSystemStatus cmdSystemStatus = new FatekGistSystemStatusCmd(fatekPLC).send();
+            FatekGistSystemStatus cmdSystemStatus = new FatekGistSystemStatusCmd(fatekPLC, 1).send();
 
             assertTrue(cmdSystemStatus.isRun(), "SystemStatus.isRun");
             assertFalse(cmdSystemStatus.isLadderChecksumError(), "SystemStatus.isLadderChecksumError");

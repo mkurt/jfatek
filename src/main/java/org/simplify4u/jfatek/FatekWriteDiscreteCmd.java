@@ -31,9 +31,9 @@ public class FatekWriteDiscreteCmd extends FatekCommand<Void> {
     private final DisReg startDiscrete;
     private final Boolean[] statuses;
 
-    public FatekWriteDiscreteCmd(FatekPLC fatekPLC, DisReg startDiscrete, Boolean... statuses) {
+    public FatekWriteDiscreteCmd(FatekPLC fatekPLC, int plcId, DisReg startDiscrete, Boolean... statuses) {
 
-        super(fatekPLC);
+        super(fatekPLC, plcId);
 
         this.startDiscrete = startDiscrete;
         this.statuses = statuses;

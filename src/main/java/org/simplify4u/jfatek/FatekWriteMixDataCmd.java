@@ -34,20 +34,20 @@ public class FatekWriteMixDataCmd extends FatekCommand<Void> {
     public static final int CMD_ID = 0x49;
     private final Map<Reg, RegValue> values = new LinkedHashMap<>();
 
-    public FatekWriteMixDataCmd(FatekPLC fatekPLC) {
+    public FatekWriteMixDataCmd(FatekPLC fatekPLC, int plcId) {
 
-        super(fatekPLC);
+        super(fatekPLC, plcId);
     }
 
-    public FatekWriteMixDataCmd(FatekPLC fatekPLC, Map<? extends Reg, ? extends RegValue> values) {
+    public FatekWriteMixDataCmd(FatekPLC fatekPLC, int plcId, Map<? extends Reg, ? extends RegValue> values) {
 
-        super(fatekPLC);
+        super(fatekPLC, plcId);
         this.values.putAll(values);
     }
 
-    public FatekWriteMixDataCmd(FatekPLC fatekPLC, Reg reg, RegValue value) {
+    public FatekWriteMixDataCmd(FatekPLC fatekPLC, int plcId, Reg reg, RegValue value) {
 
-        super(fatekPLC);
+        super(fatekPLC, plcId);
         values.put(reg, value);
     }
 

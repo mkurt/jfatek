@@ -47,8 +47,8 @@ public class FatekWriteMixDataCmdTest {
     @Test
     public void testCmd() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcId=1"
-                + "&plcOutData=014904Y00001Y00010WY00085555DF00002000000FF"
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?"
+                + "plcOutData=014904Y00001Y00010WY00085555DF00002000000FF"
                 + "&plcInData=01490")) {
 
             Map<Reg, RegValue> map = new LinkedHashMap<>();
@@ -57,18 +57,18 @@ public class FatekWriteMixDataCmdTest {
             map.put(WY(8), new RegValue16(0x5555));
             map.put(DF(2), new RegValue32(0x000000FFL));
 
-            new FatekWriteMixDataCmd(fatekPLC, map).send();
+            new FatekWriteMixDataCmd(fatekPLC, 1, map).send();
         }
     }
 
     @Test
     public void testCmdAdd() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcId=1"
-                + "&plcOutData=014906Y00001Y00010WY00085555DF00002000000FFX00101R000100000"
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?"
+                + "plcOutData=014906Y00001Y00010WY00085555DF00002000000FFX00101R000100000"
                 + "&plcInData=01490")) {
 
-            FatekWriteMixDataCmd cmd = new FatekWriteMixDataCmd(fatekPLC);
+            FatekWriteMixDataCmd cmd = new FatekWriteMixDataCmd(fatekPLC, 1);
             cmd.addReg(Y(0), RegValueDis.TRUE);
             cmd.addReg(Y(1), RegValueDis.FALSE);
             cmd.addReg(WY(8), 0x5555);
@@ -82,11 +82,11 @@ public class FatekWriteMixDataCmdTest {
     @Test
     public void testCmdArgs() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcId=1"
-                + "&plcOutData=014901Y00001"
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?"
+                + "plcOutData=014901Y00001"
                 + "&plcInData=01490")) {
 
-            new FatekWriteMixDataCmd(fatekPLC, Y(0), RegValueDis.TRUE).send();
+            new FatekWriteMixDataCmd(fatekPLC, 1, Y(0), RegValueDis.TRUE).send();
         }
     }
 }

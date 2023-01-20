@@ -46,10 +46,10 @@ public class FatekReadMixDataCmdTest {
     public void testCmd() throws Exception {
 
         Map<Reg, RegValue> map;
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcId=1"
-                + "&plcOutData=014803R00001Y0009DWM0000&plcInData=014805C341003547BA")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?"
+                + "plcOutData=014803R00001Y0009DWM0000&plcInData=014805C341003547BA")) {
 
-            map = new FatekReadMixDataCmd(fatekPLC, R(1), Y(9), DWM(0)).send();
+            map = new FatekReadMixDataCmd(fatekPLC, 1, R(1), Y(9), DWM(0)).send();
         }
 
         assertEquals(map.size(), 3);
@@ -91,8 +91,8 @@ public class FatekReadMixDataCmdTest {
 
         Map<Reg, RegValue> result;
 
-        try (FatekPLC fatekPLC = new FatekPLC(String.format("test://test?plcId=1&plcOutData=%s&&plcInData=%s", outRegs, inRegs))) {
-            result = new FatekReadMixDataCmd(fatekPLC, regs).send();
+        try (FatekPLC fatekPLC = new FatekPLC(String.format("test://test?plcOutData=%s&&plcInData=%s", outRegs, inRegs))) {
+            result = new FatekReadMixDataCmd(fatekPLC, 1, regs).send();
         }
 
         for (int i = 0; i < regs.size(); i++) {

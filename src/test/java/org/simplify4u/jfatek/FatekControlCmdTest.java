@@ -33,12 +33,12 @@ public class FatekControlCmdTest {
     @Test
     public void testCmd() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcId=1&plcOutData=01411&plcInData=01410")) {
-            new FatekControlCmd(fatekPLC, true).send();
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01411&plcInData=01410")) {
+            new FatekControlCmd(fatekPLC, 1, true).send();
         }
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcId=1&plcOutData=01410&plcInData=01410")) {
-            new FatekControlCmd(fatekPLC, false).send();
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01410&plcInData=01410")) {
+            new FatekControlCmd(fatekPLC, 1, false).send();
         }
     }
 }

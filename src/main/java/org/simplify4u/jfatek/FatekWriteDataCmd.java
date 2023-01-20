@@ -41,11 +41,12 @@ public class FatekWriteDataCmd extends FatekCommand<Void> {
      * Write command. After this constructor we need call addValue.
      *
      * @param fatekPLC plc connection
+     * @param plcId plc station address
      * @param startReg first register to write
      */
-    public FatekWriteDataCmd(FatekPLC fatekPLC, DataReg startReg) {
+    public FatekWriteDataCmd(FatekPLC fatekPLC, int plcId, DataReg startReg) {
 
-        super(fatekPLC);
+        super(fatekPLC, plcId);
         this.startReg = startReg;
     }
 
@@ -53,12 +54,13 @@ public class FatekWriteDataCmd extends FatekCommand<Void> {
      * Write the data to continuous registers.
      *
      * @param fatekPLC plc connection
+     * @param plcId plc station address
      * @param startReg first register to write
      * @param values values list
      */
-    public FatekWriteDataCmd(FatekPLC fatekPLC, DataReg startReg, RegValueData... values) {
+    public FatekWriteDataCmd(FatekPLC fatekPLC, int plcId, DataReg startReg, RegValueData... values) {
 
-        super(fatekPLC);
+        super(fatekPLC, plcId);
         this.startReg = startReg;
         this.values.addAll(Arrays.asList(values));
     }
@@ -67,12 +69,13 @@ public class FatekWriteDataCmd extends FatekCommand<Void> {
      * Write the data to continuous registers.
      *
      * @param fatekPLC plc connection
+     * @param plcId plc station address
      * @param startReg first register to write
      * @param values values list
      */
-    public FatekWriteDataCmd(FatekPLC fatekPLC, DataReg startReg, long... values) {
+    public FatekWriteDataCmd(FatekPLC fatekPLC, int plcId, DataReg startReg, long... values) {
 
-        super(fatekPLC);
+        super(fatekPLC, plcId);
         this.startReg = startReg;
         for (long value : values) {
             this.values.add((RegValueData) RegValue.getForReg(startReg, value));

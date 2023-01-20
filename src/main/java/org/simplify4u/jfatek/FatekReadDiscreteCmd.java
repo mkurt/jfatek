@@ -27,9 +27,9 @@ public class FatekReadDiscreteCmd extends FatekReadDiscreteStatusCmd {
 
     public static final int CMD_ID = 0x44;
 
-    public FatekReadDiscreteCmd(FatekPLC fatekPLC, DisReg discrete, int number) {
+    public FatekReadDiscreteCmd(FatekPLC fatekPLC, int plcId, DisReg discrete, int number) {
 
-        super(fatekPLC, discrete, number);
+        super(fatekPLC, plcId, discrete, number);
     }
 
     @Override
