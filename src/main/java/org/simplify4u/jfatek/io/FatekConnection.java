@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.SocketAddress;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * @author Slawomir Jaranowski.
@@ -28,10 +29,12 @@ import java.util.Optional;
 public abstract class FatekConnection {
 
     private final FatekConfig fatekConfig;
+    private final Consumer<Boolean> connectionStateListener;
 
-    protected FatekConnection(FatekConfig fatekConfig) {
+    protected FatekConnection(FatekConfig fatekConfig, Consumer<Boolean> connectionStateListener) {
 
         this.fatekConfig = fatekConfig;
+        this.connectionStateListener = connectionStateListener;
     }
 
     protected abstract InputStream getInputStream() throws IOException;
@@ -64,6 +67,9 @@ public abstract class FatekConnection {
 
         try {
             closeConnection();
+            if (connectionStateListener != null) {
+                connectionStateListener.accept(false);
+            }
         } catch (IOException e) {
             throw new FatekIOException(e);
         }

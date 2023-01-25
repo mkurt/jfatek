@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,15 +50,17 @@ public abstract class FatekConnectionManager implements Closeable {
     private FatekConnectionFactory connectionFactory;
     private FatekConnection connection;
 
-    protected FatekConnectionManager(URI uri) throws FatekIOException {
+    private Consumer<Boolean> connectionStateListener;
 
-        init(uri);
+    protected FatekConnectionManager(URI uri, Consumer<Boolean> connectionStateListener) throws FatekIOException {
+
+        init(uri, connectionStateListener);
     }
 
-    protected FatekConnectionManager(String uriStr) throws FatekIOException {
+    protected FatekConnectionManager(String uriStr, Consumer<Boolean> connectionStateListener) throws FatekIOException {
 
         try {
-            init(new URI(uriStr));
+            init(new URI(uriStr), connectionStateListener);
         } catch (URISyntaxException e) {
             throw new FatekIOException(e);
         }
@@ -84,6 +87,7 @@ public abstract class FatekConnectionManager implements Closeable {
             fatekConfig = null;
             connectionFactory = null;
             connection = null;
+            connectionStateListener = null;
         }
     }
 
@@ -101,7 +105,7 @@ public abstract class FatekConnectionManager implements Closeable {
                     return connection;
                 }
 
-                connection = connectionFactory.getConnection(fatekConfig);
+                connection = connectionFactory.getConnection(fatekConfig, connectionStateListener);
             }
             LOG.trace("Create new connection: {}", connection);
             return connection;
@@ -121,9 +125,10 @@ public abstract class FatekConnectionManager implements Closeable {
                 .orElseThrow(() -> new FatekIOException("Unknown connection factory for scheme: %s", scheme));
     }
 
-    private void init(URI uri) throws FatekIOException {
+    private void init(URI uri, Consumer<Boolean> connectionStateListener) throws FatekIOException {
 
         fatekConfig = new FatekConfig(uri);
         connectionFactory = findConnectionFactory();
+        this.connectionStateListener = connectionStateListener;
     }
 }

@@ -19,20 +19,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.function.Consumer;
 
 class TCPConnection extends FatekConnection {
 
     private static final int DEFAULT_PORT = 500;
     private final Socket socket;
 
-    TCPConnection(FatekConfig fatekConfig) throws IOException {
+    TCPConnection(FatekConfig fatekConfig, Consumer<Boolean> connectionStateListener) throws IOException {
 
-        super(fatekConfig);
+        super(fatekConfig, connectionStateListener);
         int timeOut = getTimeout();
 
         socket = new Socket();
         socket.setSoTimeout(timeOut);
         socket.connect(getSocketAddress(DEFAULT_PORT), timeOut);
+        if (connectionStateListener != null) {
+            connectionStateListener.accept(true);
+        }
     }
 
     @Override

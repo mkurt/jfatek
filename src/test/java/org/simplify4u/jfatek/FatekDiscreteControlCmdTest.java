@@ -36,19 +36,19 @@ public class FatekDiscreteControlCmdTest {
     @Test
     public void testCmd() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01421M0123&plcInData=01420")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01421M0123&plcInData=01420", null)) {
             new FatekDiscreteControlCmd(fatekPLC, 1, M(123), DisRunCode.Disable).send();
         }
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01422M0123&plcInData=01420")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01422M0123&plcInData=01420", null)) {
             new FatekDiscreteControlCmd(fatekPLC, 1, M(123), DisRunCode.Enable).send();
         }
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01423M0123&plcInData=01420")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01423M0123&plcInData=01420", null)) {
             new FatekDiscreteControlCmd(fatekPLC, 1, M(123), DisRunCode.Set).send();
         }
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01424M0123&plcInData=01420")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01424M0123&plcInData=01420", null)) {
             new FatekDiscreteControlCmd(fatekPLC, 1, M(123), DisRunCode.Reset).send();
         }
     }

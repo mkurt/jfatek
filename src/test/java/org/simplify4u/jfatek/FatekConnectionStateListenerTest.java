@@ -16,40 +16,37 @@
 
 package org.simplify4u.jfatek;
 
-import static org.simplify4u.jfatek.registers.DisReg.M;
-
+import org.simplify4u.jfatek.io.LoopConnectionFactory;
 import org.simplify4u.jfatek.io.MockConnectionFactory;
 import org.simplify4u.jfatek.registers.DisRunCode;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
+
+import static org.simplify4u.jfatek.registers.DisReg.M;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
 /**
  * @author Slawomir Jaranowski.
  */
-public class FatekDiscreteControlCmdTest {
+public class FatekConnectionStateListenerTest {
 
     @BeforeClass
     public void setup() {
-        FatekPLC.registerConnectionFactory(new MockConnectionFactory());
+        FatekPLC.registerConnectionFactory(new LoopConnectionFactory());
     }
 
     @Test
-    public void testCmd() throws Exception {
-
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01421M0123&plcInData=01420", null)) {
-            new FatekDiscreteControlCmd(fatekPLC, 1, M(123), DisRunCode.Disable).send();
+    public void testConnectionStateListener() throws Exception {
+        AtomicBoolean connectionState = new AtomicBoolean(false);
+        Consumer<Boolean> listener = connectionState::set;
+        try (FatekPLC fatekPLC = new FatekPLC("loop://test?t=1", listener)) {
+            new FatekLoopCmd(fatekPLC, 1).send();
+            assertTrue(connectionState.get(), "Connected");
         }
-
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01422M0123&plcInData=01420", null)) {
-            new FatekDiscreteControlCmd(fatekPLC, 1, M(123), DisRunCode.Enable).send();
-        }
-
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01423M0123&plcInData=01420", null)) {
-            new FatekDiscreteControlCmd(fatekPLC, 1, M(123), DisRunCode.Set).send();
-        }
-
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=01424M0123&plcInData=01420", null)) {
-            new FatekDiscreteControlCmd(fatekPLC, 1, M(123), DisRunCode.Reset).send();
-        }
+        assertFalse(connectionState.get(), "Disconnected");
     }
 }

@@ -47,7 +47,7 @@ public class FatekReadMixDataCmdTest {
 
         Map<Reg, RegValue> map;
         try (FatekPLC fatekPLC = new FatekPLC("test://test?"
-                + "plcOutData=014803R00001Y0009DWM0000&plcInData=014805C341003547BA")) {
+                + "plcOutData=014803R00001Y0009DWM0000&plcInData=014805C341003547BA", null)) {
 
             map = new FatekReadMixDataCmd(fatekPLC, 1, R(1), Y(9), DWM(0)).send();
         }
@@ -91,7 +91,7 @@ public class FatekReadMixDataCmdTest {
 
         Map<Reg, RegValue> result;
 
-        try (FatekPLC fatekPLC = new FatekPLC(String.format("test://test?plcOutData=%s&&plcInData=%s", outRegs, inRegs))) {
+        try (FatekPLC fatekPLC = new FatekPLC(String.format("test://test?plcOutData=%s&&plcInData=%s", outRegs, inRegs), null)) {
             result = new FatekReadMixDataCmd(fatekPLC, 1, regs).send();
         }
 

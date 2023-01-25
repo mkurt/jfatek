@@ -49,7 +49,7 @@ public class FatekWriteMixDataCmdTest {
 
         try (FatekPLC fatekPLC = new FatekPLC("test://test?"
                 + "plcOutData=014904Y00001Y00010WY00085555DF00002000000FF"
-                + "&plcInData=01490")) {
+                + "&plcInData=01490", null)) {
 
             Map<Reg, RegValue> map = new LinkedHashMap<>();
             map.put(Y(0), RegValueDis.TRUE);
@@ -66,7 +66,7 @@ public class FatekWriteMixDataCmdTest {
 
         try (FatekPLC fatekPLC = new FatekPLC("test://test?"
                 + "plcOutData=014906Y00001Y00010WY00085555DF00002000000FFX00101R000100000"
-                + "&plcInData=01490")) {
+                + "&plcInData=01490", null)) {
 
             FatekWriteMixDataCmd cmd = new FatekWriteMixDataCmd(fatekPLC, 1);
             cmd.addReg(Y(0), RegValueDis.TRUE);
@@ -84,7 +84,7 @@ public class FatekWriteMixDataCmdTest {
 
         try (FatekPLC fatekPLC = new FatekPLC("test://test?"
                 + "plcOutData=014901Y00001"
-                + "&plcInData=01490")) {
+                + "&plcInData=01490", null)) {
 
             new FatekWriteMixDataCmd(fatekPLC, 1, Y(0), RegValueDis.TRUE).send();
         }

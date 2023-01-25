@@ -17,6 +17,7 @@
 package org.simplify4u.jfatek.io;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
 /**
  * Connection factory for UPD transport.
@@ -33,8 +34,8 @@ class UDPConnectionFactory implements FatekConnectionFactory {
     }
 
     @Override
-    public FatekConnection getConnection(FatekConfig fatekConfig) throws IOException {
+    public FatekConnection getConnection(FatekConfig fatekConfig, Consumer<Boolean> connectionStateListener) throws IOException {
 
-        return new UDPConnection(fatekConfig);
+        return new UDPConnection(fatekConfig, connectionStateListener);
     }
 }

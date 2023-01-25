@@ -17,6 +17,7 @@
 package org.simplify4u.jfatek.io;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
 /**
  * <p>Connection factory for transport.</p>
@@ -39,10 +40,11 @@ public interface FatekConnectionFactory {
      * Return new connection to Fatek PLC.
      *
      * @param fatekConfig connection config
+     * @param connectionStateListener connection state listener
      * @return new connection
      * @throws IOException if problem during creating connection
      */
-    FatekConnection getConnection(FatekConfig fatekConfig) throws IOException;
+    FatekConnection getConnection(FatekConfig fatekConfig, Consumer<Boolean> connectionStateListener) throws IOException;
 
     /**
      * Schema supported by connection factory

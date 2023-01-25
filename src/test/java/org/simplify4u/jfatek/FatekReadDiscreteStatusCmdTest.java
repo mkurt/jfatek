@@ -43,7 +43,7 @@ public class FatekReadDiscreteStatusCmdTest {
 
         List<Boolean> values;
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014303S1000&plcInData=01430101")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014303S1000&plcInData=01430101", null)) {
 
             values = new FatekReadDiscreteStatusCmd(fatekPLC, 1, S(1000), 3).send();
 
@@ -71,7 +71,7 @@ public class FatekReadDiscreteStatusCmdTest {
             }
         }
 
-        try (FatekPLC fatekPLC = new FatekPLC(tStr.toString())) {
+        try (FatekPLC fatekPLC = new FatekPLC(tStr.toString(), null)) {
             List<Boolean> values = new FatekReadDiscreteStatusCmd(fatekPLC, 1, T(1000), 256).send();
 
             assertNotNull(values);

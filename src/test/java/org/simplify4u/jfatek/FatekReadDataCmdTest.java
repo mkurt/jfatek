@@ -43,7 +43,7 @@ public class FatekReadDataCmdTest {
     @Test
     public void testCmdValue16() throws Exception {
         try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014603D00012"
-                + "&plcInData=0146010A57FC40001")) {
+                + "&plcInData=0146010A57FC40001", null)) {
 
             List<RegValue> list = new FatekReadDataCmd(fatekPLC, 1, D(12), 3).send();
 
@@ -57,7 +57,7 @@ public class FatekReadDataCmdTest {
     @Test
     public void testCmdValue32() throws Exception {
         try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014603DD00012"
-                + "&plcInData=0146010A510A57FC47FC400010001")) {
+                + "&plcInData=0146010A510A57FC47FC400010001", null)) {
 
             List<RegValue> list = new FatekReadDataCmd(fatekPLC, 1, DD(12), 3).send();
 

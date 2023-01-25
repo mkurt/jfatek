@@ -39,7 +39,7 @@ public class FatekWriteDiscreteCmdTest {
     @Test
     public void testCmd1() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014503Y0010101&plcInData=01450")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014503Y0010101&plcInData=01450", null)) {
             new FatekWriteDiscreteCmd(fatekPLC, 1, Y(10), true, false, true).send();
         }
     }
@@ -63,7 +63,7 @@ public class FatekWriteDiscreteCmdTest {
 
         tStr.append("&plcInData=01450");
 
-        try (FatekPLC fatekPLC = new FatekPLC(tStr.toString())) {
+        try (FatekPLC fatekPLC = new FatekPLC(tStr.toString(), null)) {
             new FatekWriteDiscreteCmd(fatekPLC, 1, X(100), tList.toArray(new Boolean[256])).send();
         }
     }

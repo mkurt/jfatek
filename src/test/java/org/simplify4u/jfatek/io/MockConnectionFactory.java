@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Consumer;
 
 import static org.testng.Assert.assertEquals;
 
@@ -37,9 +38,12 @@ public class MockConnectionFactory implements FatekConnectionFactory {
         private ByteArrayOutputStream outputStream = null;
         private ByteArrayInputStream inputStream = null;
 
-        MockConnection(FatekConfig fatekConfig) {
+        MockConnection(FatekConfig fatekConfig, Consumer<Boolean> connectionStateListener) {
 
-            super(fatekConfig);
+            super(fatekConfig, connectionStateListener);
+            if (connectionStateListener != null) {
+                connectionStateListener.accept(true);
+            }
         }
 
         @Override
@@ -110,9 +114,9 @@ public class MockConnectionFactory implements FatekConnectionFactory {
     }
 
     @Override
-    public FatekConnection getConnection(FatekConfig fatekConfig) {
+    public FatekConnection getConnection(FatekConfig fatekConfig, Consumer<Boolean> connectionStateListener) {
 
-        return new MockConnection(fatekConfig);
+        return new MockConnection(fatekConfig, connectionStateListener);
     }
 
     @Override

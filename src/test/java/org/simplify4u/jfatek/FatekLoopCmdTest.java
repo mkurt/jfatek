@@ -35,7 +35,7 @@ public class FatekLoopCmdTest {
     @Test
     public void testDefaultMsg() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("loop://test?t=1")) {
+        try (FatekPLC fatekPLC = new FatekPLC("loop://test?t=1", null)) {
             new FatekLoopCmd(fatekPLC, 1).send();
         }
     }
@@ -43,7 +43,7 @@ public class FatekLoopCmdTest {
     @Test
     public void testMessage() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014E0ABCDEFG&plcInData=014E0ABCDEFG")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014E0ABCDEFG&plcInData=014E0ABCDEFG", null)) {
             new FatekLoopCmd(fatekPLC, 1, "ABCDEFG").send();
         }
     }
@@ -51,7 +51,7 @@ public class FatekLoopCmdTest {
     @Test(expectedExceptions = FatekException.class, expectedExceptionsMessageRegExp = "Response not equals")
     public void testMessageNotEqual() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014E0ABCDEFG&plcInData=014E0GFEDCBA")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014E0ABCDEFG&plcInData=014E0GFEDCBA", null)) {
             new FatekLoopCmd(fatekPLC, 1, "ABCDEFG").send();
         }
     }
@@ -59,7 +59,7 @@ public class FatekLoopCmdTest {
     @Test(expectedExceptions = FatekException.class, expectedExceptionsMessageRegExp = "Invalid response length")
     public void testMessageResLength() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014E0ABCDEFG&plcInData=014E0ABC")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014E0ABCDEFG&plcInData=014E0ABC", null)) {
             new FatekLoopCmd(fatekPLC, 1, "ABCDEFG").send();
         }
     }

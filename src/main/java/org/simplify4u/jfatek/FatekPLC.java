@@ -17,6 +17,7 @@
 package org.simplify4u.jfatek;
 
 import java.net.URI;
+import java.util.function.Consumer;
 
 import org.simplify4u.jfatek.io.FatekConnection;
 import org.simplify4u.jfatek.io.FatekConnectionFactory;
@@ -36,29 +37,31 @@ public final class FatekPLC extends FatekConnectionManager {
      * Create new FatekPLC client instance.
      *
      * @param uri fatekPLC address
+     * @param connectionStateListener connection state listener
      * @throws FatekIOException when some thing wrongs
      */
-    public FatekPLC(URI uri) throws FatekIOException {
+    public FatekPLC(URI uri, Consumer<Boolean> connectionStateListener) throws FatekIOException {
 
-        super(uri);
+        super(uri, connectionStateListener);
     }
 
     /**
      * Create new FatekPLC client instance.
      *
      * @param uriStr fatekPLC address
+     * @param connectionStateListener connection state listener
      * @throws FatekIOException when some thing wrongs
      */
-    public FatekPLC(String uriStr) throws FatekIOException {
+    public FatekPLC(String uriStr, Consumer<Boolean> connectionStateListener) throws FatekIOException {
 
-        super(uriStr);
+        super(uriStr, connectionStateListener);
     }
 
     public static void registerConnectionFactory(FatekConnectionFactory connectionFactory) {
         FatekConnectionManager.registerConnectionFactory(connectionFactory);
     }
 
-    FatekConnection getConnection() throws FatekIOException {
+    public FatekConnection getConnection() throws FatekIOException {
 
         return super.getConnection0();
     }

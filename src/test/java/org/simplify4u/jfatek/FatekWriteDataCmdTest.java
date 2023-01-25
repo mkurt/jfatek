@@ -39,7 +39,7 @@ public class FatekWriteDataCmdTest {
     @Test
     public void testCmdValue16() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014702F00012AAAA5555&plcInData=01470")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014702F00012AAAA5555&plcInData=01470", null)) {
             new FatekWriteDataCmd(fatekPLC, 1, F(12), RegValue16.asArray(0xaaaa, 0x5555)).send();
         }
     }
@@ -47,7 +47,7 @@ public class FatekWriteDataCmdTest {
     @Test
     public void testCmdLongValues16() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014702F00012AAAA5555&plcInData=01470")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014702F00012AAAA5555&plcInData=01470", null)) {
             new FatekWriteDataCmd(fatekPLC, 1, F(12), 0xaaaa, 0x5555).send();
         }
     }
@@ -55,7 +55,7 @@ public class FatekWriteDataCmdTest {
     @Test
     public void testCmdAddValues16() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014702F00012AAAA5555&plcInData=01470")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014702F00012AAAA5555&plcInData=01470", null)) {
             FatekWriteDataCmd fatekCmd = new FatekWriteDataCmd(fatekPLC, 1, F(12));
             fatekCmd.addValue(new RegValue16(0xaaaa));
             fatekCmd.addValue(new RegValue16(0x5555));
@@ -66,7 +66,7 @@ public class FatekWriteDataCmdTest {
     @Test
     public void testCmdAddLongValues16() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014702F00012AAAA5555&plcInData=01470")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014702F00012AAAA5555&plcInData=01470", null)) {
             FatekWriteDataCmd fatekCmd = new FatekWriteDataCmd(fatekPLC, 1, F(12));
             fatekCmd.addValue(0xaaaa);
             fatekCmd.addValue(0x5555);
@@ -78,7 +78,7 @@ public class FatekWriteDataCmdTest {
     public void testCmdValues32() throws Exception {
 
         try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014702DWX0012AAAAAAAA55555555"
-                + "&plcInData=01470")) {
+                + "&plcInData=01470", null)) {
             new FatekWriteDataCmd(fatekPLC, 1, DWX(12), RegValue32.asArray(0xaaaaaaaaL, 0x55555555L)).send();
         }
     }
@@ -87,7 +87,7 @@ public class FatekWriteDataCmdTest {
     public void testCmdLongValues32() throws Exception {
 
         try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=014702DWX0012AAAAAAAA55555555"
-                + "&plcInData=01470")) {
+                + "&plcInData=01470", null)) {
             new FatekWriteDataCmd(fatekPLC, 1, DWX(12), 0xaaaaaaaaL, 0x55555555L).send();
         }
     }
@@ -96,7 +96,7 @@ public class FatekWriteDataCmdTest {
     @Test(expectedExceptions = FatekException.class, expectedExceptionsMessageRegExp = "Invalid value type")
     public void testCmdWrongValueType() throws Exception {
 
-        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=&plcInData=01470")) {
+        try (FatekPLC fatekPLC = new FatekPLC("test://test?plcOutData=&plcInData=01470", null)) {
             new FatekWriteDataCmd(fatekPLC, 1, WX(12), RegValue32.asArray(0xaaaa, 0x5555)).send();
         }
     }

@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.util.function.Consumer;
 
 class UDPConnection extends FatekConnection {
 
@@ -29,11 +30,14 @@ class UDPConnection extends FatekConnection {
 
     private final DatagramSocket socket;
 
-    UDPConnection(FatekConfig fatekConfig) throws IOException {
+    UDPConnection(FatekConfig fatekConfig, Consumer<Boolean> connectionStateListener) throws IOException {
 
-        super(fatekConfig);
+        super(fatekConfig, connectionStateListener);
         socket = new DatagramSocket();
         socket.setSoTimeout(fatekConfig.getTimeout());
+        if (connectionStateListener != null) {
+            connectionStateListener.accept(true);
+        }
     }
 
     @Override

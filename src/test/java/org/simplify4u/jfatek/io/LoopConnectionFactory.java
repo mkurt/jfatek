@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.function.Consumer;
 
 /**
  * @author Slawomir Jaranowski.
@@ -33,9 +34,12 @@ public class LoopConnectionFactory implements FatekConnectionFactory {
 
         private ByteArrayOutputStream outStream;
 
-        protected LoopConnection(FatekConfig fatekConfig) {
+        protected LoopConnection(FatekConfig fatekConfig, Consumer<Boolean> connectionStateListener) {
 
-            super(fatekConfig);
+            super(fatekConfig, connectionStateListener);
+            if (connectionStateListener != null) {
+                connectionStateListener.accept(true);
+            }
         }
 
         @Override
@@ -64,9 +68,9 @@ public class LoopConnectionFactory implements FatekConnectionFactory {
     }
 
     @Override
-    public FatekConnection getConnection(FatekConfig fatekConfig) throws IOException {
+    public FatekConnection getConnection(FatekConfig fatekConfig, Consumer<Boolean> connectionStateListener) throws IOException {
 
-        return new LoopConnection(fatekConfig);
+        return new LoopConnection(fatekConfig, connectionStateListener);
     }
 
     @Override
