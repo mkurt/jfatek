@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.SocketTimeoutException;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -157,6 +158,9 @@ public class FatekReader {
             msgBuf = new String(bufArray, StandardCharsets.US_ASCII).toCharArray();
             msgBufOutPos = 1;
         } catch (IOException e) {
+            if (e instanceof SocketTimeoutException) {
+                throw new FatekException(e); //prevent reconnect on socket timeout
+            }
             throw new FatekIOException(e);
         }
     }

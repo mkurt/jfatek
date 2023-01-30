@@ -122,7 +122,7 @@ public abstract class FatekCommand<T> {
             execute(conn);
             setAlreadySent(true);
         } catch (FatekIOException e) {
-            if (conn != null && !(e.getCause() instanceof SocketTimeoutException)) {
+            if (conn != null) {
                 try {
                     conn.close();
                 } catch (FatekIOException ioe) {
