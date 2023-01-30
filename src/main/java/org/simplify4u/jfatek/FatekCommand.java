@@ -16,6 +16,7 @@
 
 package org.simplify4u.jfatek;
 
+import java.net.SocketTimeoutException;
 import java.util.Locale;
 
 import org.simplify4u.jfatek.io.FatekConnection;
@@ -121,7 +122,7 @@ public abstract class FatekCommand<T> {
             execute(conn);
             setAlreadySent(true);
         } catch (FatekIOException e) {
-            if (conn != null) {
+            if (conn != null && !(e.getCause() instanceof SocketTimeoutException)) {
                 try {
                     conn.close();
                 } catch (FatekIOException ioe) {

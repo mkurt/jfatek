@@ -16,14 +16,14 @@
 
 package org.simplify4u.jfatek.io;
 
+import org.simplify4u.jfatek.FatekException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-
-import org.simplify4u.jfatek.FatekException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Slawomir Jaranowski
@@ -156,14 +156,8 @@ public class FatekReader {
 
             msgBuf = new String(bufArray, StandardCharsets.US_ASCII).toCharArray();
             msgBufOutPos = 1;
-        } catch (FatekIOException fatekIOException) {
-            throw fatekIOException;
-        } catch (FatekException fatekException) {
-            throw fatekException;
         } catch (IOException e) {
             throw new FatekIOException(e);
-        } catch (Exception ex) {
-            throw new FatekException(ex);
         }
     }
 }
