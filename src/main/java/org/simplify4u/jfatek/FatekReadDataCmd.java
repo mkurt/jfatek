@@ -79,7 +79,7 @@ public class FatekReadDataCmd extends FatekCommand<List<RegValue>> {
     }
 
     @Override
-    protected void readData(FatekReader reader) throws FatekIOException {
+    protected void readData(FatekReader reader) throws FatekException {
 
         result = new ArrayList<>(number);
 

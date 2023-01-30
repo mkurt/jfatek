@@ -65,7 +65,7 @@ public abstract class FatekCommand<T> {
      */
     protected abstract void writeData(final FatekWriter writer) throws FatekException, FatekIOException;
 
-    protected void readData(final FatekReader reader) throws FatekException, FatekIOException {
+    protected void readData(final FatekReader reader) throws FatekException {
         // default do nothing
     }
 

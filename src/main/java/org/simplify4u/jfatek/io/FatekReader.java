@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+import org.simplify4u.jfatek.FatekException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,28 +56,28 @@ public class FatekReader {
         return lenToCopy;
     }
 
-    public int readByte() throws FatekIOException {
+    public int readByte() throws FatekException {
 
         char[] buf = new char[2];
         if (read(buf) != 2) {
-            throw new FatekUnexpectedEOSException();
+            throw new FatekException("Message too short");
         }
 
         return (Character.digit(buf[0], 16) << 4 | Character.digit(buf[1], 16)) & 0xff;
     }
 
-    public int readNibble() throws FatekIOException {
+    public int readNibble() throws FatekException {
 
         char[] buf = new char[1];
 
         int n = read(buf);
-        if (n < 0) {
-            throw new FatekUnexpectedEOSException();
+        if (n != 1) {
+            throw new FatekException("Message too short");
         }
         return Character.digit(buf[0], 16) & 0xff;
     }
 
-    public Boolean readBool() throws FatekIOException {
+    public Boolean readBool() throws FatekException {
 
         int n = readNibble();
         switch (n) {
@@ -85,28 +86,28 @@ public class FatekReader {
             case 1:
                 return true;
             default:
-                throw new FatekIOException("Invalid value %d for boolean", n);
+                throw new FatekException("Invalid value %d for boolean", n);
         }
     }
 
-    public long readInt16() throws FatekIOException {
+    public long readInt16() throws FatekException {
 
         char[] buf = new char[4];
 
         int n = read(buf);
         if (n != 4) {
-            throw new FatekUnexpectedEOSException();
+            throw new FatekException("Message too short");
         }
         return Long.parseLong(new String(buf), 16);
     }
 
-    public long readInt32() throws FatekIOException {
+    public long readInt32() throws FatekException {
 
         char[] buf = new char[8];
 
         int n = read(buf);
         if (n != 8) {
-            throw new FatekUnexpectedEOSException();
+            throw new FatekException("Message too short");
         }
         return Long.parseLong(new String(buf), 16);
     }
@@ -116,13 +117,16 @@ public class FatekReader {
      *
      * @throws FatekIOException if problem with connection
      */
-    public void readNextMessage() throws FatekIOException {
+    public void readNextMessage() throws FatekIOException, FatekException {
 
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
         try {
             int t = input.read();
             if (t != 0x02) {
-                throw new FatekIOException("No STX");
+                if (t < 0) {
+                    throw new FatekUnexpectedEOSException();
+                }
+                throw new FatekException("No STX");
             }
             buf.write(t);
 
@@ -140,7 +144,7 @@ public class FatekReader {
             }
 
             if (bufArray.length < 8) {
-                throw new FatekIOException("Message to short");
+                throw new FatekException("Message too short");
             }
 
             int crc0 = FatekUtils.countCRC(bufArray, bufArray.length - 3);
@@ -152,10 +156,14 @@ public class FatekReader {
 
             msgBuf = new String(bufArray, StandardCharsets.US_ASCII).toCharArray();
             msgBufOutPos = 1;
-        } catch (FatekIOException e) {
-            throw e;
+        } catch (FatekIOException fatekIOException) {
+            throw fatekIOException;
+        } catch (FatekException fatekException) {
+            throw fatekException;
         } catch (IOException e) {
             throw new FatekIOException(e);
+        } catch (Exception ex) {
+            throw new FatekException(ex);
         }
     }
 }

@@ -70,7 +70,7 @@ public class FatekReadDiscreteStatusCmd extends FatekCommand<List<Boolean>> {
     }
 
     @Override
-    protected void readData(FatekReader reader) throws FatekIOException {
+    protected void readData(FatekReader reader) throws FatekException {
 
         returnData = new ArrayList<>(number);
 

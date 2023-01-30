@@ -46,7 +46,7 @@ public class FatekGistSystemStatusCmd extends FatekCommand<FatekGistSystemStatus
     }
 
     @Override
-    protected void readData(FatekReader reader) throws FatekIOException {
+    protected void readData(FatekReader reader) throws FatekException {
 
         status.setStatus1(reader.readByte(), reader.readByte(), reader.readByte());
     }

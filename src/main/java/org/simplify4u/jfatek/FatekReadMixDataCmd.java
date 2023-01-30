@@ -111,7 +111,7 @@ public class FatekReadMixDataCmd extends FatekCommand<Map<Reg, RegValue>> {
     }
 
     @Override
-    protected void readData(FatekReader reader) throws FatekIOException {
+    protected void readData(FatekReader reader) throws FatekException {
 
         for (int i = nextRegIndex; i <= lastRegIndex; i++) {
             result.put(regs[i], RegValue.getForReg(regs[i], reader));

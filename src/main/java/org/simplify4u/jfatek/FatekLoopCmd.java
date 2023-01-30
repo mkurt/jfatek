@@ -74,7 +74,7 @@ public class FatekLoopCmd extends FatekCommand<Void> {
     }
 
     @Override
-    protected void readData(FatekReader reader) throws FatekException, FatekIOException {
+    protected void readData(FatekReader reader) throws FatekException {
 
         char[] buf = new char[message.length()];
 

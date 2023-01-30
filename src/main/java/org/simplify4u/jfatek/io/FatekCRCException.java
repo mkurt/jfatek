@@ -16,10 +16,12 @@
 
 package org.simplify4u.jfatek.io;
 
+import org.simplify4u.jfatek.FatekException;
+
 /**
  * @author Slawomir Jaranowski.
  */
-public class FatekCRCException extends FatekIOException {
+public class FatekCRCException extends FatekException {
 
     private static final long serialVersionUID = -3686223442230597566L;
 
